@@ -1,0 +1,8 @@
+wechat:
+  mp-configs:
+    - appId: app_id-1
+      secret: secret-1
+    - appId: app_id-2
+      secret: secret-2
+    - appId: app_id-3
+      secret: secret-3
