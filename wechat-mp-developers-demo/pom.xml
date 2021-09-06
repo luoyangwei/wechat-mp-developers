@@ -31,6 +31,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.wechat.mp</groupId>
+            <artifactId>wechat-mp-developers</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
@@ -82,6 +88,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <version>1.5.30</version>
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
@@ -103,7 +110,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.mp.demo.wechatmpdevelopersdemo.WechatMpDevelopersDemoApplication</mainClass>
+                    <mainClass>com.mp.demo.WechatMpDevelopersDemoApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

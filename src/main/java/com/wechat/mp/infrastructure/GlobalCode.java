@@ -1,8 +1,16 @@
 package com.wechat.mp.infrastructure;
 
 
+/**
+ * 微信返回全局code
+ *
+ * @author luoyangwei
+ */
 public enum GlobalCode implements ResponseCode {
 
+    /**
+     * 微信会返回的都在这里
+     */
     SYSTEM_BUSY("-1", "系统繁忙，此时请开发者稍候再试"),
     SUCCESSFUL("0", "请求成功"),
     APP_SECRET_ERROR("40001", "获取 access_token 时 AppSecret 错误，或者 access_token 无效。请开发者认真比对 AppSecret 的正确性，或查看是否正在为恰当的公众号调用接口"),
@@ -205,7 +213,7 @@ public enum GlobalCode implements ResponseCode {
         throw new RuntimeException("code 没有找到对应的枚举");
     }
 
-
+    @Override
     public String toString() {
         return getCode() + ": " + getMessage();
     }

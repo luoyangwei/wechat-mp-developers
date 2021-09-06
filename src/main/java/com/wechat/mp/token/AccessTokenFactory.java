@@ -12,9 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * access_token 工厂获取
+ *
+ * @author luoyangwei
  */
 public class AccessTokenFactory {
-    private static final Map<MpConfig, AccessToken> globalAccessTokenMap = new ConcurrentHashMap<>();
+    private static final Map<MpConfig, AccessToken> GLOBAL_ACCESS_TOKEN_MAP = new ConcurrentHashMap<>();
 
 
     /**
@@ -24,7 +26,7 @@ public class AccessTokenFactory {
      * @return access_token
      */
     public static AccessToken load(MpConfig mpConfig) {
-        AccessToken accessToken = globalAccessTokenMap.get(mpConfig);
+        AccessToken accessToken = GLOBAL_ACCESS_TOKEN_MAP.get(mpConfig);
         if (accessToken == null) {
             reload(mpConfig);
         }
@@ -43,7 +45,7 @@ public class AccessTokenFactory {
         String responseBody = HttpUtil.get(StrUtil.format(UrlConstants.ACCESS_TOKEN_REQUEST, mpConfig.getAppId(), mpConfig.getSecret()));
         AccessTokenSuccessfulHandler accessTokenSuccessfulStrategy = new AccessTokenSuccessfulHandler();
         AccessToken accessToken = accessTokenSuccessfulStrategy.handle(responseBody);
-        globalAccessTokenMap.put(mpConfig, accessToken);
+        GLOBAL_ACCESS_TOKEN_MAP.put(mpConfig, accessToken);
         return accessToken;
     }
 

@@ -1,5 +1,10 @@
 package com.wechat.mp.token;
 
+/**
+ * token 实例对象
+ *
+ * @author luoyangwei
+ */
 public class AccessToken {
 
 

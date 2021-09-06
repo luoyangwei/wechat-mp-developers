@@ -5,6 +5,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * @author luoyangwei
+ */
 @Configuration
 @EnableConfigurationProperties(WechatMpProperties.class)
 @ConditionalOnClass(WechatMpServiceRegister.class)
