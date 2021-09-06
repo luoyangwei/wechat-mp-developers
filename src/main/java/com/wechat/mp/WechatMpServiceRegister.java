@@ -1,42 +1,47 @@
 package com.wechat.mp;
 
 
-import com.wechat.mp.infrastructure.MpConfig;
-import com.wechat.mp.response.ResponseFactory;
-import com.wechat.mp.response.WechatResponse;
-import com.wechat.mp.token.AccessTokenFactory;
+import com.wechat.mp.infrastructure.account.AccountConfigureFactory;
+import com.wechat.mp.infrastructure.account.WechatAccountRegister;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 
-import java.util.List;
+import java.util.Map;
 
+/**
+ * @author luoyangwei
+ */
 class WechatMpServiceRegister implements ApplicationContextAware, InitializingBean {
+    private ApplicationContext applicationContext;
 
-
-    private WechatMpProperties wechatMpProperties;
-
-    @Autowired
-    public void setWechatMpProperties(WechatMpProperties wechatMpProperties) {
-        this.wechatMpProperties = wechatMpProperties;
+    /**
+     * 账号配置工厂实例化
+     * {@link AccountConfigureFactory} 是mp-developers的基础服务,让我们可以使用账号
+     *
+     * @return {@link AccountConfigureFactory}
+     */
+    @Primary
+    @Bean
+    public AccountConfigureFactory accountConfigureFactory() {
+        return new AccountConfigureFactory();
     }
+
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        applicationContext.getBeansOfType(WechatResponse.class).values().forEach(wechatResponse ->
-                ResponseFactory.setWechatResponse(wechatResponse.getResponseCode(), wechatResponse));
+        this.applicationContext = applicationContext;
     }
-
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        List<MpConfig> mpConfigs = wechatMpProperties.getMpConfigs();
-        for (MpConfig mpConfig : mpConfigs) {
-            AccessTokenFactory.load(mpConfig);
+        AccountConfigureFactory accountConfigureFactory = new AccountConfigureFactory();
+        Map<String, WechatAccountRegister> wechatAccountRegisterBeans = applicationContext.getBeansOfType(WechatAccountRegister.class);
+        for (String beanName : wechatAccountRegisterBeans.keySet()) {
+            wechatAccountRegisterBeans.get(beanName).registerAccount(accountConfigureFactory);
         }
     }
-
-
 }
